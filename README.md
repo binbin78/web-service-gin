@@ -22,7 +22,7 @@ In order to regenerate below files,  you can run swag init -g main.go
 The project has setup for running debugging with Delve to support setup debugger and conditional debugger   
 
 References and links:
-
+  
     1. [Build Rest API](https://go.dev/doc/tutorial/web-service-gin)
-    2. [Build Swagger API](https://www.soberkoder.com/swagger-go-api-swaggo/)
-    3. [Connect to MongoDB](https://dev.to/hackmamba/build-a-rest-api-with-golang-and-mongodb-gin-gonic-version-269m)
+    1. [Build Swagger API](https://www.soberkoder.com/swagger-go-api-swaggo/)
+    1. [Connect to MongoDB](https://dev.to/hackmamba/build-a-rest-api-with-golang-and-mongodb-gin-gonic-version-269m)
