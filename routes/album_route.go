@@ -21,7 +21,7 @@ router.GET("/albums", controllers.GetAlbums)
 router.POST("/albums", controllers.CreateAlbum)
 router.GET("/albums/:id", controllers.GetAlbumByID)
 router.DELETE("/albums/:id", controllers.DeleteAlbumByID)
-router.PUT("/albums/:album", controllers.EditAlbumByID)
+router.PUT("/albums/:id", controllers.EditAlbumByID)
 url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
 router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 }

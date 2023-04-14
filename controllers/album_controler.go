@@ -154,33 +154,35 @@ func DeleteAlbumByID(c *gin.Context) {
 }
 //	@Summary	Add a new albume to the store
 //	@Tags		albums
-//	@Accept		*/*
+//	@Accept		json
 //	@Produce	json
+// @Param id path string true "ID of the album"
 //	@Param		message	body		models.Album		true	"Album Data"
 //	@Success	204	{object} map[string]interface{}
-//	@Router		/albums/album/ [put]
+//	@Router		/albums/{id} [put]
 func EditAlbumByID(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)	
 	albumId := c.Param("id")
-	var album models.Album
-	defer cancel()
-	objId, _ := primitive.ObjectIDFromHex(albumId)
+    var album models.Album
+    defer cancel()
 
-	//validate the request body
-	if err := c.BindJSON(&album); err != nil {
+    //validate the request body
+    if err := c.BindJSON(&album); err != nil {
 		c.JSON(http.StatusBadRequest, responses.AlbumReponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": err.Error()}})
-		return
-	}
+        return
+    }
 
-	//use the validator library to validate required fields
-	if validationErr := validate.Struct(&album); validationErr != nil {
-		c.JSON(http.StatusBadRequest, responses.AlbumReponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": validationErr.Error()}})
-		return
-	}
+    //use the validator library to validate required fields
+    if validationErr := validate.Struct(&album); validationErr != nil {
+        c.JSON(http.StatusBadRequest, responses.AlbumReponse{Status: http.StatusBadRequest, Message: "error", Data: map[string]interface{}{"data": validationErr.Error()}})
+        return
+    }
+       
+	objId, _ := primitive.ObjectIDFromHex(albumId)	
 
 	update := bson.M{"artist": album.Artist, "title": album.Title, "price": album.Price}
 	//update data base
-	result, err := albumCollection.UpdateOne(ctx, bson.M{"id": albumId}, bson.M{"$set": update})
+	result, err := albumCollection.UpdateOne(ctx, bson.M{"id": objId}, bson.M{"$set": update})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, responses.AlbumReponse{Status: http.StatusInternalServerError, Message: "error", Data: map[string]interface{}{"data": err.Error()}})
 		return

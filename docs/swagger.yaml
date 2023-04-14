@@ -109,11 +109,15 @@ paths:
       summary: Get details for a given albumId
       tags:
       - albums
-  /albums/album/:
     put:
       consumes:
-      - '*/*'
+      - application/json
       parameters:
+      - description: ID of the album
+        in: path
+        name: id
+        required: true
+        type: string
       - description: Album Data
         in: body
         name: message
