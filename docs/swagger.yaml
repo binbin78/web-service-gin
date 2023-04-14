@@ -1,0 +1,134 @@
+basePath: /
+definitions:
+  models.Album:
+    properties:
+      artist:
+        type: string
+      id:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+    required:
+    - artist
+    - price
+    - title
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: soberkoder@swagger.io
+    name: API Support
+  description: This is a sample serice for managing albums
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API
+  version: "1.0"
+paths:
+  /albums:
+    get:
+      consumes:
+      - '*/*'
+      description: Get details of all albums
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get details of all albums
+      tags:
+      - albums
+    post:
+      consumes:
+      - application/json
+      description: Create a new Album with the input paylod
+      parameters:
+      - description: Album details
+        in: body
+        name: album-model
+        required: true
+        schema:
+          $ref: '#/definitions/models.Album'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new Album
+      tags:
+      - albums
+  /albums/{id}:
+    delete:
+      consumes:
+      - '*/*'
+      description: Delete by album ID
+      parameters:
+      - description: album ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete an album
+      tags:
+      - album
+    get:
+      consumes:
+      - '*/*'
+      description: Get details of album corresponding to the input albumId
+      parameters:
+      - description: ID of the album
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get details for a given albumId
+      tags:
+      - albums
+  /albums/album/:
+    put:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: Album Data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.Album'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add a new albume to the store
+      tags:
+      - albums
+swagger: "2.0"
